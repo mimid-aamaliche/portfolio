@@ -66,7 +66,7 @@
   <!-- PROJECTS (auto-rendered) -->
   <section id="work" class="section">
     <h2 class="section-title"><span class="tag-mono">/projects</span> Études de cas</h2>
-    <p class="section-lede">Chaque projet ci-dessous est chargé automatiquement depuis le dossier <code>/projects</code> du dépôt — ajouter un dossier suffit à le faire apparaître ici.</p>
+    <p class="section-lede">Des systèmes réels — automatisation IA, plateformes full-stack, indexeurs on-chain — construits de bout en bout, du backend à l'interface utilisateur.</p>
     <div id="project-grid" class="project-grid">
       <p class="loading-state">Chargement des projets…</p>
     </div>
@@ -75,18 +75,29 @@
   <!-- ABOUT -->
   <section id="about" class="section about">
     <h2 class="section-title"><span class="tag-mono">/about</span> À propos</h2>
-    <p>Développeur full-stack basé à Oujda, en 5ème année d'ingénieur en informatique à l'ENSA Oujda. Je conçois des systèmes de bout en bout — API REST, architecture 3-tiers, authentification sécurisée — et j'intègre désormais des modèles d'IA (LLM, RAG, transcription, vision) dans des pipelines d'automatisation métier concrets, du secteur médical à la production de contenu.</p>
-    <div class="skills-row">
-      <span class="chip">C# / .NET</span>
-      <span class="chip">ASP.NET Core</span>
-      <span class="chip">React / TypeScript</span>
-      <span class="chip">RAG</span>
-      <span class="chip">Claude API</span>
-      <span class="chip">Gemini API</span>
-      <span class="chip">Whisper</span>
-      <span class="chip">SQL Server</span>
+    <div class="about-inner">
+      <img src="assets/avatar.jpg" alt="Mohamed Aamaliche" class="avatar" width="120" height="120">
+      <div>
+        <p>Développeur full-stack basé à Oujda, en 5ème année d'ingénieur en informatique à l'ENSA Oujda. Je conçois des systèmes de bout en bout — API REST, architecture 3-tiers, authentification sécurisée — et j'intègre désormais des modèles d'IA (LLM, RAG, transcription, vision) dans des pipelines d'automatisation métier concrets, du secteur médical à la production de contenu.</p>
+        <div class="skills-row">
+          <span class="chip">C# / .NET</span>
+          <span class="chip">ASP.NET Core</span>
+          <span class="chip">React / TypeScript</span>
+          <span class="chip">RAG</span>
+          <span class="chip">Claude API</span>
+          <span class="chip">Gemini API</span>
+          <span class="chip">Whisper</span>
+          <span class="chip">SQL Server</span>
+        </div>
+      </div>
     </div>
   </section>
+
+  <!-- LIGHTBOX (populated by script.js on image click) -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image en plein écran" hidden>
+    <button class="lightbox-close" aria-label="Fermer">&#x2715;</button>
+    <img class="lightbox-img" src="" alt="">
+  </div>
 
   <!-- CONTACT -->
   <section id="contact" class="section contact">

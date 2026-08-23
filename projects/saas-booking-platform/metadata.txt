@@ -1,0 +1,9 @@
+﻿# Metadata for this project. Format: key: value (one per line).
+# "tech" and "tags" accept comma-separated lists.
+# Lines starting with # are ignored.
+
+title: Multi-Tenant SaaS Booking Platform
+description: A subdomain-based multi-tenant booking platform with three distinct role interfaces - Admin, Organizations, and Clients - featuring a unified client dashboard, passwordless Magic Link authentication, JWT session management, and full MVP delivery in under three weeks.
+date: 2026-01
+tech: PHP, Symfony, Doctrine ORM, MySQL, JWT, Magic Link
+link: 

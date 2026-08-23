@@ -155,3 +155,44 @@ async function loadAllProjects() {
 }
 
 document.addEventListener("DOMContentLoaded", loadAllProjects);
+
+/* ============================================================
+   Lightbox — opens when a .gallery img is clicked.
+   Works via event delegation so it handles dynamically
+   rendered project cards without any extra setup.
+   ============================================================ */
+(function initLightbox() {
+  const lb    = document.getElementById("lightbox");
+  const lbImg = lb ? lb.querySelector(".lightbox-img") : null;
+  const lbBtn = lb ? lb.querySelector(".lightbox-close") : null;
+  if (!lb || !lbImg) return;
+
+  function open(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || "";
+    lb.hidden = false;
+    document.body.style.overflow = "hidden";
+    lbBtn && lbBtn.focus();
+  }
+
+  function close() {
+    lb.hidden = true;
+    lbImg.src = "";
+    document.body.style.overflow = "";
+  }
+
+  // Open on gallery image click (delegation)
+  document.addEventListener("click", (e) => {
+    const img = e.target.closest(".gallery img");
+    if (img) { e.preventDefault(); open(img.src, img.alt); }
+  });
+
+  // Close on backdrop click
+  lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+
+  // Close button
+  lbBtn && lbBtn.addEventListener("click", close);
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !lb.hidden) close(); });
+}());

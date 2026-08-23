@@ -1,0 +1,9 @@
+﻿# Metadata for this project. Format: key: value (one per line).
+# "tech" and "tags" accept comma-separated lists.
+# Lines starting with # are ignored.
+
+title: Full-Stack Online Course Platform
+description: Migrated a legacy WinForms desktop application to a modern web platform - ASP.NET Core REST API on the backend, React/TypeScript on the frontend - with Stripe payment processing, Mux DRM video streaming, and a multi-role permission system covering students, instructors, and admins.
+date: 2025-02
+tech: C#, ASP.NET Core, React, TypeScript, SQL Server, Stripe, Mux
+link: 

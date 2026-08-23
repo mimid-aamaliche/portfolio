@@ -1,0 +1,9 @@
+﻿# Metadata for this project. Format: key: value (one per line).
+# "tech" and "tags" accept comma-separated lists.
+# Lines starting with # are ignored.
+
+title: Solana Swap Tracker
+description: A .NET background service that monitors the Solana blockchain in real time, ingesting high-frequency on-chain swap events and persisting transaction data alongside wallet metadata via Entity Framework ORM.
+date: 2025
+tech: C#, .NET, Solana RPC, Entity Framework ORM
+link: 

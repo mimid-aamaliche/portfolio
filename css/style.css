@@ -111,7 +111,46 @@ nav a:hover{ color: var(--accent); }
 .project-links a:hover{ text-decoration:underline; }
 
 /* ===== About ===== */
+.about-inner{ display:flex; gap: 28px; align-items:flex-start; }
+.avatar{
+  width: 120px; height: 120px; flex-shrink:0;
+  border-radius: var(--radius); border:1px solid var(--line);
+  object-fit: cover; object-position: top;
+}
 .skills-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+
+/* ===== Gallery — clickable images ===== */
+.gallery img{
+  cursor: zoom-in;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.gallery img:hover{ opacity: 0.85; transform: scale(1.03); }
+
+/* ===== Lightbox ===== */
+.lightbox{
+  position: fixed; inset:0; z-index: 1000;
+  background: rgba(16,35,63,0.92);
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.lightbox[hidden]{ display:none; }
+.lightbox-img{
+  max-width: 92vw; max-height: 88vh;
+  border-radius: var(--radius); border:1px solid var(--line);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+.lightbox-close{
+  position: absolute; top: 20px; right: 24px;
+  background: none; border: 1px solid var(--line); border-radius: var(--radius);
+  color: #fff; font-size: 1.2rem; cursor: pointer;
+  padding: 4px 10px; line-height: 1;
+}
+.lightbox-close:hover{ border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 640px){
+  .about-inner{ flex-direction: column; }
+  .avatar{ width: 80px; height: 80px; }
+}
 
 /* ===== Contact ===== */
 .contact-links{ display:flex; flex-wrap:wrap; gap:22px; margin-top:14px; font-family: var(--mono); }

@@ -1,0 +1,9 @@
+﻿# Metadata for this project. Format: key: value (one per line).
+# "tech" and "tags" accept comma-separated lists.
+# Lines starting with # are ignored.
+
+title: Custom Mini-DBMS
+description: A C# library that simulates a relational database engine from scratch - full CRUD operations, a basic SQL parser, and automatic schema generation - built as an exploration of how databases work under the hood.
+date: 2023-06
+tech: C#
+link: 
