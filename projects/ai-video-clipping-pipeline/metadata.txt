@@ -1,0 +1,9 @@
+# Metadata for this project. Format: key: value (one per line).
+# "tech" and "tags" accept comma-separated lists.
+# Lines starting with # are ignored.
+
+title: Pipeline d'automatisation de montage vidéo par IA
+description: Automatisation du clipping de podcasts/vidéos combinant plusieurs modèles IA : Whisper pour la transcription, Gemini pour la description visuelle, et Claude pour le raisonnement et la génération du plan de montage.
+date: 2025
+tech: Claude API, Gemini API, Whisper, Python
+link: 

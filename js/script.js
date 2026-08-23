@@ -1,0 +1,157 @@
+/* ============================================================
+   CONFIG — edit these 3 lines to match your GitHub repo.
+   This is the only place you should ever need to touch this file.
+   ============================================================ */
+const GITHUB_USER   = "mimid-aamaliche";   // your GitHub username
+const GITHUB_REPO   = "portfolio";         // the repo this site lives in
+const GITHUB_BRANCH = "main";              // branch to read from
+
+/* ============================================================
+   Everything below discovers /projects automatically.
+   Drop a new folder in /projects, push, and it appears here —
+   no code changes needed.
+   ============================================================ */
+
+const API_BASE = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
+const RAW_BASE = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
+
+const IMAGE_EXT = /\.(png|jpe?g|webp|gif|svg)$/i;
+const VIDEO_EXT = /\.(mp4|webm|mov)$/i;
+
+async function fetchDir(path) {
+  const res = await fetch(`${API_BASE}/${path}?ref=${GITHUB_BRANCH}`);
+  if (!res.ok) {
+    if (res.status === 404) return []; // folder doesn't exist yet — treat as empty
+    throw new Error(`GitHub API error ${res.status} for ${path}`);
+  }
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+function rawUrl(path) {
+  return `${RAW_BASE}/${path}`;
+}
+
+// Parses a simple "key: value" metadata.txt file.
+// Lines starting with # are treated as comments.
+function parseMetadata(text) {
+  const meta = {};
+  text.split("\n").forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) return;
+    const idx = trimmed.indexOf(":");
+    if (idx === -1) return;
+    const key = trimmed.slice(0, idx).trim().toLowerCase();
+    const value = trimmed.slice(idx + 1).trim();
+    meta[key] = value;
+  });
+  // fields that should become arrays
+  ["tech", "tags"].forEach((key) => {
+    if (meta[key]) meta[key] = meta[key].split(",").map((s) => s.trim()).filter(Boolean);
+  });
+  return meta;
+}
+
+async function loadProject(name) {
+  const basePath = `projects/${name}`;
+  try {
+    const entries = await fetchDir(basePath);
+
+    let meta = {};
+    const metaFile = entries.find((e) => e.type === "file" && e.name.toLowerCase() === "metadata.txt");
+    if (metaFile) {
+      const text = await (await fetch(rawUrl(metaFile.path))).text();
+      meta = parseMetadata(text);
+    }
+
+    let images = [];
+    if (entries.some((e) => e.type === "dir" && e.name === "images")) {
+      const imgEntries = await fetchDir(`${basePath}/images`);
+      images = imgEntries
+        .filter((e) => e.type === "file" && IMAGE_EXT.test(e.name))
+        .map((e) => rawUrl(e.path));
+    }
+
+    let videos = [];
+    if (entries.some((e) => e.type === "dir" && e.name === "videos")) {
+      const vidEntries = await fetchDir(`${basePath}/videos`);
+      videos = vidEntries
+        .filter((e) => e.type === "file" && VIDEO_EXT.test(e.name))
+        .map((e) => rawUrl(e.path));
+    }
+
+    return {
+      slug: name,
+      title: meta.title || name.replace(/-/g, " "),
+      description: meta.description || "",
+      tech: meta.tech || [],
+      date: meta.date || "",
+      link: meta.link || "",
+      images,
+      videos,
+    };
+  } catch (err) {
+    console.error(`Failed to load project "${name}":`, err);
+    return null;
+  }
+}
+
+function renderProject(p) {
+  const gallery = p.images.length
+    ? `<div class="gallery">${p.images.map((src) => `<img src="${src}" alt="${p.title} — capture" loading="lazy">`).join("")}</div>`
+    : "";
+
+  const video = p.videos.length
+    ? `<video class="project-video" src="${p.videos[0]}" controls preload="metadata"></video>`
+    : "";
+
+  const chips = p.tech.length
+    ? `<div class="chip-row">${p.tech.map((t) => `<span class="chip">${t}</span>`).join("")}</div>`
+    : "";
+
+  const link = p.link
+    ? `<div class="project-links"><a href="${p.link}" target="_blank" rel="noopener">Voir le projet →</a></div>`
+    : "";
+
+  return `
+    <article class="project-card">
+      <p class="project-meta">${p.date}</p>
+      <h3>${p.title}</h3>
+      ${p.description ? `<p class="project-desc">${p.description}</p>` : ""}
+      ${chips}
+      ${video}
+      ${gallery}
+      ${link}
+    </article>
+  `;
+}
+
+async function loadAllProjects() {
+  const grid = document.getElementById("project-grid");
+  try {
+    const entries = await fetchDir("projects");
+    const dirs = entries.filter((e) => e.type === "dir");
+
+    if (dirs.length === 0) {
+      grid.innerHTML = `<p class="empty-state">Aucun projet pour l'instant. Ajoutez un dossier dans <code>/projects</code> et il apparaîtra ici automatiquement.</p>`;
+      return;
+    }
+
+    const projects = (await Promise.all(dirs.map((d) => loadProject(d.name)))).filter(Boolean);
+
+    if (projects.length === 0) {
+      grid.innerHTML = `<p class="empty-state">Aucun projet pour l'instant. Ajoutez un dossier dans <code>/projects</code> et il apparaîtra ici automatiquement.</p>`;
+      return;
+    }
+
+    // most recent first if dates are sortable (YYYY or YYYY-MM), otherwise keep folder order
+    projects.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+
+    grid.innerHTML = projects.map(renderProject).join("");
+  } catch (err) {
+    console.error("Failed to load projects:", err);
+    grid.innerHTML = `<p class="empty-state">Impossible de charger les projets pour le moment. Réessayez plus tard.</p>`;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadAllProjects);
