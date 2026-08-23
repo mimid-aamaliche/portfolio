@@ -1,4 +1,4 @@
-﻿# Metadata for this project. Format: key: value (one per line).
+# Metadata for this project. Format: key: value (one per line).
 # "tech" and "tags" accept comma-separated lists.
 # Lines starting with # are ignored.
 
@@ -6,4 +6,5 @@ title: Ethereum Swap Indexer
 description: A .NET backend that integrates the Etherscan API to monitor Ethereum swap events in real time, persisting transaction metadata to SQLite with efficient historical query logic for on-chain analytics.
 date: 2025
 tech: C#, .NET, Etherscan API, SQLite
+highlight: true
 link: 

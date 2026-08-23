@@ -50,6 +50,17 @@ a{ color: inherit; }
 .logo-dot{ color: var(--accent); }
 nav a{ margin-left: 28px; text-decoration:none; font-family: var(--mono); font-size:0.85rem; color: var(--ink-soft); }
 nav a:hover{ color: var(--accent); }
+.header-avatar-link{ margin-left: 20px; flex-shrink:0; display:flex; }
+.header-avatar{
+  width: 36px; height: 36px;
+  border-radius: 50%; border: 1px solid var(--line);
+  object-fit: cover; object-position: top;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.header-avatar-link:hover .header-avatar{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
 
 /* ===== Hero ===== */
 .hero{ padding: 6vw 6vw 4vw; max-width: 1000px; }
@@ -95,6 +106,19 @@ nav a:hover{ color: var(--accent); }
 .project-card{
   background: var(--bg-panel); border:1px solid var(--line); border-radius: var(--radius);
   padding: 22px; display:flex; flex-direction:column; gap:12px;
+}
+.project-card--highlight{
+  border-color: var(--accent);
+  border-left-width: 3px;
+  background: color-mix(in srgb, var(--accent) 4%, var(--bg-panel));
+}
+.project-card-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+.badge-automation{
+  font-family: var(--mono); font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 100px; padding: 2px 8px; white-space: nowrap;
 }
 .project-card h3{ margin:0; font-size:1.1rem; }
 .project-meta{ font-family: var(--mono); font-size:0.72rem; color: var(--ink-soft); text-transform:uppercase; letter-spacing:0.03em; }
@@ -164,6 +188,9 @@ a:focus-visible, button:focus-visible{ outline: 2px solid var(--accent); outline
 
 /* ===== Responsive ===== */
 @media (max-width: 640px){
-  .site-header{ flex-direction:column; gap:12px; align-items:flex-start; }
+  .site-header{ flex-wrap: wrap; gap: 8px; }
+  .site-header .logo{ flex: 1; }
+  .header-avatar-link{ order: -1; margin-left: auto; }
+  nav{ width: 100%; display:flex; flex-wrap:wrap; gap:4px 0; }
   nav a{ margin-left:0; margin-right:18px; }
 }

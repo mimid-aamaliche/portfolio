@@ -87,6 +87,7 @@ async function loadProject(name) {
       tech: meta.tech || [],
       date: meta.date || "",
       link: meta.link || "",
+      highlight: meta.highlight === "true",
       images,
       videos,
     };
@@ -113,9 +114,18 @@ function renderProject(p) {
     ? `<div class="project-links"><a href="${p.link}" target="_blank" rel="noopener">Voir le projet →</a></div>`
     : "";
 
+  const badge = p.highlight
+    ? `<span class="badge-automation">Automatisation</span>`
+    : "";
+
+  const cardClass = p.highlight ? "project-card project-card--highlight" : "project-card";
+
   return `
-    <article class="project-card">
-      <p class="project-meta">${p.date}</p>
+    <article class="${cardClass}">
+      <div class="project-card-header">
+        <p class="project-meta">${p.date}</p>
+        ${badge}
+      </div>
       <h3>${p.title}</h3>
       ${p.description ? `<p class="project-desc">${p.description}</p>` : ""}
       ${chips}
@@ -125,6 +135,7 @@ function renderProject(p) {
     </article>
   `;
 }
+
 
 async function loadAllProjects() {
   const grid = document.getElementById("project-grid");
@@ -144,8 +155,11 @@ async function loadAllProjects() {
       return;
     }
 
-    // most recent first if dates are sortable (YYYY or YYYY-MM), otherwise keep folder order
-    projects.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    // Highlighted (automation) projects first, then most recent within each group
+    projects.sort((a, b) => {
+      if (a.highlight !== b.highlight) return a.highlight ? -1 : 1;
+      return (b.date || "").localeCompare(a.date || "");
+    });
 
     grid.innerHTML = projects.map(renderProject).join("");
   } catch (err) {

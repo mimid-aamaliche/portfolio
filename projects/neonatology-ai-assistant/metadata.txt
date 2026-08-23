@@ -6,4 +6,5 @@ title: Assistant IA pour le service de néonatologie
 description: Outil permettant aux médecins de dialoguer avec une IA capable de retrouver des cas cliniques similaires à partir des dossiers patients, pour accélérer le diagnostic et la prise de décision.
 date: 2025
 tech: RAG, LLM, C#, ASP.NET Core, SQL Server
+highlight: true
 link: 

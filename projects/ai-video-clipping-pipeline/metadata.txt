@@ -6,4 +6,5 @@ title: Pipeline d'automatisation de montage vidéo par IA
 description: Automatisation du clipping de podcasts/vidéos combinant plusieurs modèles IA : Whisper pour la transcription, Gemini pour la description visuelle, et Claude pour le raisonnement et la génération du plan de montage.
 date: 2025
 tech: Claude API, Gemini API, Whisper, Python
+highlight: true
 link: 
