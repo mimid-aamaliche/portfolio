@@ -1,0 +1,148 @@
+﻿{
+    "generatedAt":  "2026-08-23T12:53:26.2710813-07:00",
+    "projects":  [
+                     {
+                         "slug":  "ai-video-clipping-pipeline",
+                         "title":  "Pipeline d\u0027automatisation de montage vidéo par IA",
+                         "description":  "Automatisation du clipping de podcasts/vidéos combinant plusieurs modèles IA : Whisper pour la transcription, Gemini pour la description visuelle, et Claude pour le raisonnement et la génération du plan de montage.",
+                         "tech":  [
+                                      "Claude API",
+                                      "Gemini API",
+                                      "Whisper",
+                                      "Python"
+                                  ],
+                         "date":  "2025",
+                         "link":  "",
+                         "highlight":  true,
+                         "images":  [
+
+                                    ],
+                         "videos":  [
+
+                                    ]
+                     },
+                     {
+                         "slug":  "custom-mini-dbms",
+                         "title":  "Custom Mini-DBMS",
+                         "description":  "A C# library that simulates a relational database engine from scratch - full CRUD operations, a basic SQL parser, and automatic schema generation - built as an exploration of how databases work under the hood.",
+                         "tech":  [
+                                      "C#"
+                                  ],
+                         "date":  "2023-06",
+                         "link":  "",
+                         "highlight":  false,
+                         "images":  [
+
+                                    ],
+                         "videos":  [
+
+                                    ]
+                     },
+                     {
+                         "slug":  "ethereum-swap-indexer",
+                         "title":  "Ethereum Swap Indexer",
+                         "description":  "A .NET backend that integrates the Etherscan API to monitor Ethereum swap events in real time, persisting transaction metadata to SQLite with efficient historical query logic for on-chain analytics.",
+                         "tech":  [
+                                      "C#",
+                                      ".NET",
+                                      "Etherscan API",
+                                      "SQLite"
+                                  ],
+                         "date":  "2025",
+                         "link":  "",
+                         "highlight":  true,
+                         "images":  [
+
+                                    ],
+                         "videos":  [
+
+                                    ]
+                     },
+                     {
+                         "slug":  "full-stack-course-platform",
+                         "title":  "Full-Stack Online Course Platform",
+                         "description":  "Migrated a legacy WinForms desktop application to a modern web platform - ASP.NET Core REST API on the backend, React/TypeScript on the frontend - with Stripe payment processing, Mux DRM video streaming, and a multi-role permission system covering students, instructors, and admins.",
+                         "tech":  [
+                                      "C#",
+                                      "ASP.NET Core",
+                                      "React",
+                                      "TypeScript",
+                                      "SQL Server",
+                                      "Stripe",
+                                      "Mux"
+                                  ],
+                         "date":  "2025-02",
+                         "link":  "",
+                         "highlight":  false,
+                         "images":  [
+
+                                    ],
+                         "videos":  [
+
+                                    ]
+                     },
+                     {
+                         "slug":  "neonatology-ai-assistant",
+                         "title":  "Assistant IA pour le service de néonatologie",
+                         "description":  "Outil permettant aux médecins de dialoguer avec une IA capable de retrouver des cas cliniques similaires à partir des dossiers patients, pour accélérer le diagnostic et la prise de décision.",
+                         "tech":  [
+                                      "RAG",
+                                      "LLM",
+                                      "C#",
+                                      "ASP.NET Core",
+                                      "SQL Server"
+                                  ],
+                         "date":  "2025",
+                         "link":  "",
+                         "highlight":  true,
+                         "images":  [
+
+                                    ],
+                         "videos":  [
+
+                                    ]
+                     },
+                     {
+                         "slug":  "saas-booking-platform",
+                         "title":  "Multi-Tenant SaaS Booking Platform",
+                         "description":  "A subdomain-based multi-tenant booking platform with three distinct role interfaces - Admin, Organizations, and Clients - featuring a unified client dashboard, passwordless Magic Link authentication, JWT session management, and full MVP delivery in under three weeks.",
+                         "tech":  [
+                                      "PHP",
+                                      "Symfony",
+                                      "Doctrine ORM",
+                                      "MySQL",
+                                      "JWT",
+                                      "Magic Link"
+                                  ],
+                         "date":  "2026-01",
+                         "link":  "",
+                         "highlight":  false,
+                         "images":  [
+
+                                    ],
+                         "videos":  [
+
+                                    ]
+                     },
+                     {
+                         "slug":  "solana-swap-tracker",
+                         "title":  "Solana Swap Tracker",
+                         "description":  "A .NET background service that monitors the Solana blockchain in real time, ingesting high-frequency on-chain swap events and persisting transaction data alongside wallet metadata via Entity Framework ORM.",
+                         "tech":  [
+                                      "C#",
+                                      ".NET",
+                                      "Solana RPC",
+                                      "Entity Framework ORM"
+                                  ],
+                         "date":  "2025",
+                         "link":  "",
+                         "highlight":  true,
+                         "images":  [
+
+                                    ],
+                         "videos":  [
+
+                                    ]
+                     }
+                 ]
+}

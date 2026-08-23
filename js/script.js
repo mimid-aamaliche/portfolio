@@ -97,17 +97,27 @@ async function loadProject(name) {
   }
 }
 
+function resolveMediaUrl(url) {
+  if (!url) return "";
+  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("/")) return url;
+  return url;
+}
+
 function renderProject(p) {
-  const gallery = p.images.length
-    ? `<div class="gallery">${p.images.map((src) => `<img src="${src}" alt="${p.title} — capture" loading="lazy">`).join("")}</div>`
+  const images = Array.isArray(p.images) ? p.images : [];
+  const videos = Array.isArray(p.videos) ? p.videos : [];
+  const techList = Array.isArray(p.tech) ? p.tech : (p.tech ? [p.tech] : []);
+
+  const gallery = images.length
+    ? `<div class="gallery">${images.map((src) => `<img src="${resolveMediaUrl(src)}" alt="${p.title} — capture" loading="lazy">`).join("")}</div>`
     : "";
 
-  const video = p.videos.length
-    ? `<video class="project-video" src="${p.videos[0]}" controls preload="metadata"></video>`
+  const video = videos.length
+    ? `<video class="project-video" src="${resolveMediaUrl(videos[0])}" controls preload="metadata"></video>`
     : "";
 
-  const chips = p.tech.length
-    ? `<div class="chip-row">${p.tech.map((t) => `<span class="chip">${t}</span>`).join("")}</div>`
+  const chips = techList.length
+    ? `<div class="chip-row">${techList.map((t) => `<span class="chip">${t}</span>`).join("")}</div>`
     : "";
 
   const link = p.link
@@ -123,7 +133,7 @@ function renderProject(p) {
   return `
     <article class="${cardClass}">
       <div class="project-card-header">
-        <p class="project-meta">${p.date}</p>
+        <p class="project-meta">${p.date || ""}</p>
         ${badge}
       </div>
       <h3>${p.title}</h3>
@@ -137,21 +147,59 @@ function renderProject(p) {
 }
 
 
+/* ---- 1. Manifest (fast path — avoids GitHub API rate limits) ---- */
+
+async function tryManifest() {
+  // Try relative path first (works when served locally or directly on GitHub Pages)
+  try {
+    const res = await fetch("manifest.json");
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.projects) && data.projects.length > 0) {
+        return data.projects;
+      }
+    }
+  } catch {}
+
+  // Try raw GitHub URL as fallback
+  try {
+    const res = await fetch(`${RAW_BASE}/manifest.json`);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.projects) && data.projects.length > 0) {
+        return data.projects;
+      }
+    }
+  } catch {}
+
+  return null;
+}
+
 async function loadAllProjects() {
   const grid = document.getElementById("project-grid");
   try {
-    const entries = await fetchDir("projects");
-    const dirs = entries.filter((e) => e.type === "dir");
+    // Fast path: try manifest.json first
+    let projects = await tryManifest();
 
-    if (dirs.length === 0) {
-      grid.innerHTML = `<p class="empty-state">Aucun projet pour l'instant. Ajoutez un dossier dans <code>/projects</code> et il apparaîtra ici automatiquement.</p>`;
-      return;
+    if (projects) {
+      console.log("[portfolio] Loaded from manifest.json ✓");
+    } else {
+      // Slow path: GitHub API discovery (runs when manifest is missing or deleted)
+      console.log("[portfolio] manifest.json not found — falling back to GitHub API");
+
+      const entries = await fetchDir("projects");
+      const dirs = entries.filter((e) => e.type === "dir");
+
+      if (dirs.length === 0) {
+        grid.innerHTML = `<p class="empty-state">Aucun projet pour l'instant.</p>`;
+        return;
+      }
+
+      projects = (await Promise.all(dirs.map((d) => loadProject(d.name)))).filter(Boolean);
     }
 
-    const projects = (await Promise.all(dirs.map((d) => loadProject(d.name)))).filter(Boolean);
-
-    if (projects.length === 0) {
-      grid.innerHTML = `<p class="empty-state">Aucun projet pour l'instant. Ajoutez un dossier dans <code>/projects</code> et il apparaîtra ici automatiquement.</p>`;
+    if (!projects || projects.length === 0) {
+      grid.innerHTML = `<p class="empty-state">Aucun projet pour l'instant. Ajoutez un dossier dans <code>/projects</code> ou régénérez <code>manifest.json</code>.</p>`;
       return;
     }
 
@@ -164,7 +212,7 @@ async function loadAllProjects() {
     grid.innerHTML = projects.map(renderProject).join("");
   } catch (err) {
     console.error("Failed to load projects:", err);
-    grid.innerHTML = `<p class="empty-state">Impossible de charger les projets pour le moment. Réessayez plus tard.</p>`;
+    grid.innerHTML = `<p class="empty-state">Impossible de charger les projets pour le moment (limite d'API GitHub atteinte ou erreur réseau). Régénérez <code>manifest.json</code> pour un chargement instantané sans API.</p>`;
   }
 }
 

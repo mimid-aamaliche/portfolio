@@ -135,12 +135,6 @@ nav a:hover{ color: var(--accent); }
 .project-links a:hover{ text-decoration:underline; }
 
 /* ===== About ===== */
-.about-inner{ display:flex; gap: 28px; align-items:flex-start; }
-.avatar{
-  width: 120px; height: 120px; flex-shrink:0;
-  border-radius: var(--radius); border:1px solid var(--line);
-  object-fit: cover; object-position: top;
-}
 .skills-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
 
 /* ===== Gallery — clickable images ===== */
@@ -171,10 +165,7 @@ nav a:hover{ color: var(--accent); }
 }
 .lightbox-close:hover{ border-color: var(--accent); color: var(--accent); }
 
-@media (max-width: 640px){
-  .about-inner{ flex-direction: column; }
-  .avatar{ width: 80px; height: 80px; }
-}
+
 
 /* ===== Contact ===== */
 .contact-links{ display:flex; flex-wrap:wrap; gap:22px; margin-top:14px; font-family: var(--mono); }
